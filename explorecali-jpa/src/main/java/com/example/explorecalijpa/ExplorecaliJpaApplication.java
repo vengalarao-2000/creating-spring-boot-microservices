@@ -60,8 +60,7 @@ public class ExplorecaliJpaApplication implements CommandLineRunner {
      * Create tour entities from an external file
      */
     private void createToursFromFile(String fileToImport) throws IOException {
-         TourFromFile.read(fileToImport).forEach(t -> 
-            tourService.createTour(
+        TourFromFile.read(fileToImport).forEach(t -> tourService.createTour(
                 t.packageName(),
                 t.title(),
                 t.description(),
@@ -71,20 +70,19 @@ public class ExplorecaliJpaApplication implements CommandLineRunner {
                 t.bullets(),
                 t.keywords(),
                 Difficulty.valueOf(t.difficulty()),
-                Region.findByLabel(t.region())
-            )
-        );
+                Region.findByLabel(t.region())));
     }
-    
+
     /*
      * Helper to import ExploreCali.json
      */
     record TourFromFile(String packageName, String title, String description,
-            String blurb, Integer price, String length, String bullets, 
+            String blurb, Integer price, String length, String bullets,
             String keywords, String difficulty, String region) {
         static List<TourFromFile> read(String fileToImport) throws IOException {
-         return new ObjectMapper().readValue(new File(fileToImport), 
-            new TypeReference<List<TourFromFile>>() {});
+            return new ObjectMapper().readValue(new File(fileToImport),
+                    new TypeReference<List<TourFromFile>>() {
+                    });
         }
     }
 }
